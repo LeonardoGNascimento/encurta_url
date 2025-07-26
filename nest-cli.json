@@ -1,8 +1,32 @@
 {
   "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
-  "sourceRoot": "src",
+  "sourceRoot": "apps/encurta-url/src",
   "compilerOptions": {
-    "deleteOutDir": true
+    "deleteOutDir": true,
+    "webpack": true,
+    "tsConfigPath": "apps/encurta-url/tsconfig.app.json"
+  },
+  "monorepo": true,
+  "root": "apps/encurta-url",
+  "projects": {
+    "encurta-url": {
+      "type": "application",
+      "root": "apps/encurta-url",
+      "entryFile": "main",
+      "sourceRoot": "apps/encurta-url/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/encurta-url/tsconfig.app.json"
+      }
+    },
+    "usuario": {
+      "type": "application",
+      "root": "apps/usuario",
+      "entryFile": "main",
+      "sourceRoot": "apps/usuario/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/usuario/tsconfig.app.json"
+      }
+    }
   }
 }

@@ -1,13 +1,16 @@
 import {
   ConflictException,
+  HttpException,
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
-import { Usuario } from 'src/usuarios/dominio/entity/usuario.entity';
 import { Repository } from 'typeorm';
+import { Usuario } from './dominio/entity/usuario.entity';
+import { CriarUsuarioDto } from './dominio/dto/createUser.dto';
+import { LoginDto } from './dominio/dto/login.dto';
 
 @Injectable()
 export class UsuarioService {
@@ -16,7 +19,7 @@ export class UsuarioService {
     private jwtService: JwtService,
   ) {}
 
-  async create(createUsuarioDto: any): Promise<Usuario> {
+  async create(createUsuarioDto: CriarUsuarioDto): Promise<Usuario> {
     const existingUser = await this.urls.findOne({
       where: {
         email: createUsuarioDto.email,
@@ -24,7 +27,9 @@ export class UsuarioService {
     });
 
     if (existingUser) {
-      throw new ConflictException('Email já está em uso');
+      console.log('aqui');
+      
+      throw new HttpException('Email já está em uso', 400);
     }
 
     const hashedPassword: string = await bcrypt.hash(
@@ -38,10 +43,10 @@ export class UsuarioService {
     });
   }
 
-  async login(createUsuarioDto: any) {
+  async login(loginDto: LoginDto) {
     const usuario = await this.urls.findOne({
       where: {
-        email: createUsuarioDto.email,
+        email: loginDto.email,
       },
     });
 
@@ -50,7 +55,7 @@ export class UsuarioService {
     }
 
     const isPasswordValid = await bcrypt.compare(
-      createUsuarioDto.senha,
+      loginDto.senha,
       usuario.senha,
     );
 

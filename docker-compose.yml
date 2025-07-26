@@ -1,19 +1,21 @@
 version: '3.9'
 services:
-  phpmyadmin:
-    image: phpmyadmin
-    restart: always
+  krakend:
+    image: devopsfaith/krakend:2.4
+    container_name: krakend
+    volumes:
+      - ./krakend.json:/etc/krakend/krakend.json
     ports:
-      - 8010:80
-    networks:
-      - my-bridge-network
+      - "8080:8080"
+    command: ["run", "-d", "-c", "/etc/krakend/krakend.json"]
+
 
   mariadb:
     image: mariadb:latest
     container_name: mariadb-compose
     environment:
-      MYSQL_ROOT_PASSWORD: my-secret-pw
-      MYSQL_DATABASE: mydatabase
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: usuarios
     ports:
       - "3306:3306"
     networks:

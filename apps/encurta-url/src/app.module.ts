@@ -4,9 +4,8 @@ import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { Url } from './url.entity';
-import { UsuarioModule } from './usuarios/usuario.module';
-import { AuthModule } from './auth/auth.module';
+import { Url } from './dominio/entity/url.entity';
+import { AuthModule } from '../../../shared/auth/auth.module';
 
 @Module({
   imports: [
@@ -23,13 +22,12 @@ import { AuthModule } from './auth/auth.module';
         port: 3306,
         username: config.get('DATABASE_USER'),
         password: config.get('DATABASE_PASSWORD'),
-        database: config.get('DATABASE_SCHEMA'),
-        entities: [__dirname + '/**/*.entity{.ts,.js}'],
+        database: config.get('DATABASE_SCHEMA_URL'),
+        entities: [Url],
         synchronize: true,
       }),
     }),
     TypeOrmModule.forFeature([Url]),
-    UsuarioModule,
   ],
   controllers: [AppController],
   providers: [AppService],

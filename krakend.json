@@ -1,0 +1,63 @@
+{
+  "version": 3,
+  "name": "gateway",
+  "port": 8080,
+  "endpoints": [
+    {
+      "endpoint": "/",
+      "method": "POST",
+      "output_encoding": "no-op",
+      "input_headers": ["Authorization"],
+      "backend": [
+        {
+          "host": ["http://192.168.0.17:3001"],
+          "url_pattern": "/",
+          "method": "POST",
+          "encoding": "no-op",
+          "headers_to_pass": ["Authorization"]
+        }
+      ]
+    },
+    {
+      "endpoint": "/",
+      "method": "GET",
+      "output_encoding": "no-op",
+      "input_headers": ["Authorization"],
+      "backend": [
+        {
+          "host": ["http://192.168.0.17:3001"],
+          "url_pattern": "/",
+          "method": "GET",
+          "encoding": "no-op",
+          "headers_to_pass": ["Authorization"]
+        }
+      ]
+    },
+    {
+      "endpoint": "/usuario",
+      "method": "POST",
+      "output_encoding": "no-op",
+      "backend": [
+        {
+          "host": ["http://192.168.0.17:3000"],
+          "url_pattern": "/",
+          "method": "POST",
+          "encoding": "no-op"
+        }
+      ]
+    },
+    {
+      "endpoint": "/usuario/login",
+      "method": "POST",
+      "output_encoding": "no-op",
+      "backend": [
+        {
+          "host": ["http://192.168.0.17:3000"],
+          "url_pattern": "/login",
+          "method": "POST",
+          "encoding": "no-op"
+        }
+      ]
+    }
+  ]
+}

@@ -7,7 +7,6 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Usuario } from './usuarios/dominio/entity/usuario.entity';
 
 @Entity()
 export class Url {
@@ -31,11 +30,4 @@ export class Url {
 
   @Column({ nullable: true })
   deleted: Date;
-
-  @ManyToOne(() => Usuario, (usuario) => usuario.urls, {
-    nullable: true,
-    onDelete: 'SET NULL',
-  })
-  @JoinColumn({ name: 'usuarioId' }) // 👈 força o nome da coluna
-  usuario: Usuario;
 }

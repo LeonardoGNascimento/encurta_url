@@ -3,11 +3,9 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn
 } from 'typeorm';
-import { Url } from '../../../url.entity';
 
 @Entity()
 export class Usuario {
@@ -32,7 +30,4 @@ export class Usuario {
 
   @Column({ nullable: true })
   deleted: Date;
-
-  @OneToMany(() => Url, (url) => url.usuario)
-  urls: Url[];
 }
