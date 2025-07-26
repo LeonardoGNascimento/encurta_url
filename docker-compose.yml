@@ -1,0 +1,24 @@
+version: '3.9'
+services:
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - 8010:80
+    networks:
+      - my-bridge-network
+
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb-compose
+    environment:
+      MYSQL_ROOT_PASSWORD: my-secret-pw
+      MYSQL_DATABASE: mydatabase
+    ports:
+      - "3306:3306"
+    networks:
+      - my-bridge-network
+
+networks:
+  my-bridge-network:  # Defina uma rede personalizada
+    driver: bridge
