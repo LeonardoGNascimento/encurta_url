@@ -1,14 +1,13 @@
-import { Body, Injectable, NotFoundException, Req } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 
+import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Request } from 'express';
-import { Repository } from 'typeorm';
+import { IsNull, Repository } from 'typeorm';
 import { gerarStringAleatoria } from '../../../shared/core/generateCode';
-import { Url } from './dominio/entity/url.entity';
 import { CreateUrlDto } from './dominio/dto/createUrl.dto';
 import { UpdateUrlDto } from './dominio/dto/updateUrl.dto';
-import { ConfigService } from '@nestjs/config';
 import { Click } from './dominio/entity/clicks.entity';
+import { Url } from './dominio/entity/url.entity';
 
 @Injectable()
 export class AppService {
@@ -18,9 +17,13 @@ export class AppService {
     private configService: ConfigService,
   ) {}
 
-  getHello(usuarioId: any) {
+  list(usuarioId: any) {
     return this.urlRepository.find({
+      relations: {
+        clicks: true,
+      },
       where: {
+        deleted: IsNull(),
         usuarioId,
       },
     });
@@ -31,6 +34,7 @@ export class AppService {
       where: {
         id,
         usuarioId,
+        deleted: IsNull(),
       },
     });
 
@@ -45,9 +49,14 @@ export class AppService {
     await this.findByIdAndUser(data);
 
     return await this.urlRepository
-      .delete({
-        id: data.id,
-      })
+      .update(
+        {
+          id: data.id,
+        },
+        {
+          deleted: new Date(),
+        },
+      )
       .then((item) => (item.affected ? item.affected > 0 : false));
   }
 

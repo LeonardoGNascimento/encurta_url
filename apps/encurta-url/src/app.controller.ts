@@ -25,8 +25,8 @@ export class AppController {
 
   @UseGuards(AuthGuard)
   @Get()
-  getHello(@Req() req: any) {
-    return this.service.getHello(req.user?.id);
+  list(@Req() req: any) {
+    return this.service.list(req.user?.id);
   }
 
   @UseGuards(AuthGuard)
