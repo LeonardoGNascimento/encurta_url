@@ -1,4 +1,4 @@
-import { User } from 'apps/user/src/dominio/entity/user.entity';
+import { User } from 'apps/user/src/domain/entity/user.entity';
 
 declare module 'express' {
   interface Request {

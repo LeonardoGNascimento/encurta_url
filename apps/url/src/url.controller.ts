@@ -12,16 +12,15 @@ import {
   UseGuards,
 } from '@nestjs/common';
 
-import { Request } from 'express';
 import { AuthGuard } from '../../../shared/core/auth.guard';
 import { AuthOptionalGuard } from '../../../shared/core/authOptional.guard';
-import { AppService } from './app.service';
-import { CreateUrlDto } from './dominio/dto/createUrl.dto';
-import { UpdateUrlDto } from './dominio/dto/updateUrl.dto';
+import { CreateUrlDto } from './domain/dto/createUrl.dto';
+import { UpdateUrlDto } from './domain/dto/updateUrl.dto';
+import { UrlService } from './url.service';
 
 @Controller()
-export class AppController {
-  constructor(private service: AppService) {}
+export class UrlController {
+  constructor(private service: UrlService) {}
 
   @UseGuards(AuthGuard)
   @Get()

@@ -1,6 +1,5 @@
 import {
   ConflictException,
-  HttpException,
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -8,13 +7,12 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import { Repository } from 'typeorm';
-
-import { LoginDto } from './dominio/dto/login.dto';
-import { User } from './dominio/entity/user.entity';
-import { CreateUserDto } from './dominio/dto/createUser.dto';
+import { CreateUserDto } from './domain/dto/createUser.dto';
+import { LoginDto } from './domain/dto/login.dto';
+import { User } from './domain/entity/user.entity';
 
 @Injectable()
-export class UsuarioService {
+export class UserService {
   constructor(
     @InjectRepository(User) private urls: Repository<User>,
     private jwtService: JwtService,
@@ -28,7 +26,7 @@ export class UsuarioService {
     });
 
     if (existingUser) {
-      throw new ConflictException('Email já está em uso');
+      throw new ConflictException('Email is already in use');
     }
 
     const hashedPassword: string = await bcrypt.hash(
@@ -50,7 +48,7 @@ export class UsuarioService {
     });
 
     if (!usuario) {
-      throw new UnauthorizedException('Credenciais inválidas');
+      throw new UnauthorizedException('Invalid credentials');
     }
 
     const isPasswordValid = await bcrypt.compare(
@@ -59,7 +57,7 @@ export class UsuarioService {
     );
 
     if (!isPasswordValid) {
-      throw new UnauthorizedException('Credenciais inválidas');
+      throw new UnauthorizedException('Invalid credentials');
     }
 
     const { password, ...result } = usuario;

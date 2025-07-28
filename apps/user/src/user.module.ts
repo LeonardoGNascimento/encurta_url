@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from 'shared/auth/auth.module';
-import { User } from './dominio/entity/user.entity';
-import { UsuarioController } from './user.controller';
-import { UsuarioService } from './user.service';
+import { User } from './domain/entity/user.entity';
+import { UserController } from './user.controller';
+import { UserService } from './user.service';
 
 @Module({
   imports: [
@@ -28,7 +28,7 @@ import { UsuarioService } from './user.service';
     }),
     TypeOrmModule.forFeature([User]),
   ],
-  providers: [UsuarioService],
-  controllers: [UsuarioController],
+  providers: [UserService],
+  controllers: [UserController],
 })
 export class UsuarioModule {}

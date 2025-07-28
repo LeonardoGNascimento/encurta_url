@@ -2,13 +2,13 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 import { IsNull, Repository } from 'typeorm';
-import { CreateUrlDto } from './dominio/dto/createUrl.dto';
-import { UpdateUrlDto } from './dominio/dto/updateUrl.dto';
-import { Click } from './dominio/entity/clicks.entity';
-import { Url } from './dominio/entity/url.entity';
+import { CreateUrlDto } from './domain/dto/createUrl.dto';
+import { UpdateUrlDto } from './domain/dto/updateUrl.dto';
+import { Click } from './domain/entity/clicks.entity';
+import { Url } from './domain/entity/url.entity';
 
 @Injectable()
-export class AppService {
+export class UrlService {
   constructor(
     @InjectRepository(Url) private urlRepository: Repository<Url>,
     @InjectRepository(Click) private clickRepository: Repository<Click>,

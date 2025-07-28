@@ -1,12 +1,11 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { Url } from './dominio/entity/url.entity';
 import { AuthModule } from '../../../shared/auth/auth.module';
-import { Click } from './dominio/entity/clicks.entity';
+import { Click } from './domain/entity/clicks.entity';
+import { Url } from './domain/entity/url.entity';
+import { UrlController } from './url.controller';
+import { UrlService } from './url.service';
 
 @Module({
   imports: [
@@ -30,7 +29,7 @@ import { Click } from './dominio/entity/clicks.entity';
     }),
     TypeOrmModule.forFeature([Url, Click]),
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [UrlController],
+  providers: [UrlService],
 })
-export class AppModule {}
+export class UrlModule {}
