@@ -1,9 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-
 import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 import { IsNull, Repository } from 'typeorm';
-import { gerarStringAleatoria } from '../../../shared/core/generateCode';
 import { CreateUrlDto } from './dominio/dto/createUrl.dto';
 import { UpdateUrlDto } from './dominio/dto/updateUrl.dto';
 import { Click } from './dominio/entity/clicks.entity';
@@ -16,6 +14,17 @@ export class AppService {
     @InjectRepository(Click) private clickRepository: Repository<Click>,
     private configService: ConfigService,
   ) {}
+
+  gerarStringAleatoria(length: number = 6): string {
+    const caracteres =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let resultado = '';
+    for (let i = 0; i < length; i++) {
+      const indice = Math.floor(Math.random() * caracteres.length);
+      resultado += caracteres[indice];
+    }
+    return resultado;
+  }
 
   async list(usuarioId: any) {
     return this.urlRepository
@@ -93,7 +102,7 @@ export class AppService {
   }
 
   async create(body: CreateUrlDto) {
-    let code = gerarStringAleatoria();
+    let code = this.gerarStringAleatoria();
 
     const codeFind = await this.urlRepository.findOne({
       where: {
@@ -102,7 +111,7 @@ export class AppService {
     });
 
     while (code === codeFind?.code) {
-      code = gerarStringAleatoria();
+      code = this.gerarStringAleatoria();
     }
 
     await this.urlRepository.save({
