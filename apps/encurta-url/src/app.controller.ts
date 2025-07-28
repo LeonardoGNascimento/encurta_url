@@ -38,9 +38,7 @@ export class AppController {
   @UseGuards(AuthGuard)
   @Patch(':id')
   update(@Req() req: any, @Param('id') id: number, @Body() body: UpdateUrlDto) {
-    console.log(body);
-
-    // return this.service.update({ ...body, usuarioId: req.user?.id, id });
+    return this.service.update({ ...body, usuarioId: req.user?.id, id });
   }
 
   @Get(':code')
