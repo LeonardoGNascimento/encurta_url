@@ -8,18 +8,19 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import { Repository } from 'typeorm';
-import { Usuario } from './dominio/entity/usuario.entity';
-import { CriarUsuarioDto } from './dominio/dto/createUser.dto';
+
 import { LoginDto } from './dominio/dto/login.dto';
+import { User } from './dominio/entity/user.entity';
+import { CreateUserDto } from './dominio/dto/createUser.dto';
 
 @Injectable()
 export class UsuarioService {
   constructor(
-    @InjectRepository(Usuario) private urls: Repository<Usuario>,
+    @InjectRepository(User) private urls: Repository<User>,
     private jwtService: JwtService,
   ) {}
 
-  async create(createUsuarioDto: CriarUsuarioDto): Promise<Usuario> {
+  async create(createUsuarioDto: CreateUserDto): Promise<User> {
     const existingUser = await this.urls.findOne({
       where: {
         email: createUsuarioDto.email,

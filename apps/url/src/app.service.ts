@@ -17,16 +17,23 @@ export class AppService {
     private configService: ConfigService,
   ) {}
 
-  list(usuarioId: any) {
-    return this.urlRepository.find({
-      relations: {
-        clicks: true,
-      },
-      where: {
-        deleted: IsNull(),
-        usuarioId,
-      },
-    });
+  async list(usuarioId: any) {
+    return this.urlRepository
+      .find({
+        relations: {
+          clicks: true,
+        },
+        where: {
+          deleted: IsNull(),
+          usuarioId,
+        },
+      })
+      .then((item) => {
+        return item.map(({ clicks, ...item2 }) => ({
+          ...item2,
+          clicks: clicks.length,
+        }));
+      });
   }
 
   async findByIdAndUser({ usuarioId, id }: any) {

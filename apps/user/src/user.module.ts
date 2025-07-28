@@ -1,11 +1,10 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { Usuario } from './dominio/entity/usuario.entity';
-import { UsuarioController } from './usuario.controller';
-import { UsuarioService } from './usuario.service';
 import { AuthModule } from 'shared/auth/auth.module';
+import { User } from './dominio/entity/user.entity';
+import { UsuarioController } from './user.controller';
+import { UsuarioService } from './user.service';
 
 @Module({
   imports: [
@@ -23,11 +22,11 @@ import { AuthModule } from 'shared/auth/auth.module';
         username: config.get('DATABASE_USER'),
         password: config.get('DATABASE_PASSWORD'),
         database: config.get('DATABASE_SCHEMA'),
-        entities: [Usuario],
+        entities: [User],
         synchronize: true,
       }),
     }),
-    TypeOrmModule.forFeature([Usuario]),
+    TypeOrmModule.forFeature([User]),
   ],
   providers: [UsuarioService],
   controllers: [UsuarioController],

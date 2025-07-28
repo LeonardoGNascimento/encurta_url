@@ -1,15 +1,15 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { UsuarioService } from './usuario.service';
-import { Usuario } from './dominio/entity/usuario.entity';
-import { CriarUsuarioDto } from './dominio/dto/createUser.dto';
+import { UsuarioService } from './user.service';
 import { LoginDto } from './dominio/dto/login.dto';
+import { User } from './dominio/entity/user.entity';
+import { CreateUserDto } from './dominio/dto/createUser.dto';
 
 @Controller()
 export class UsuarioController {
   constructor(private service: UsuarioService) {}
 
   @Post()
-  async create(@Body() body: CriarUsuarioDto): Promise<Usuario> {
+  async create(@Body() body: CreateUserDto): Promise<User> {
     return await this.service.create(body);
   }
 

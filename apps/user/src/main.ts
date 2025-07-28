@@ -1,6 +1,6 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { UsuarioModule } from './usuario.module';
+import { UsuarioModule } from './user.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(UsuarioModule);
