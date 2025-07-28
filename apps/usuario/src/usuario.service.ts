@@ -27,13 +27,11 @@ export class UsuarioService {
     });
 
     if (existingUser) {
-      console.log('aqui');
-      
-      throw new HttpException('Email já está em uso', 400);
+      throw new ConflictException('Email já está em uso');
     }
 
     const hashedPassword: string = await bcrypt.hash(
-      createUsuarioDto.senha,
+      createUsuarioDto.password,
       10,
     );
 
@@ -55,15 +53,15 @@ export class UsuarioService {
     }
 
     const isPasswordValid = await bcrypt.compare(
-      loginDto.senha,
-      usuario.senha,
+      loginDto.password,
+      usuario.password,
     );
 
     if (!isPasswordValid) {
       throw new UnauthorizedException('Credenciais inválidas');
     }
 
-    const { senha, ...result } = usuario;
+    const { password, ...result } = usuario;
 
     return {
       access_token: await this.jwtService.signAsync(result),

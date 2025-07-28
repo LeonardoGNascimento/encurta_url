@@ -8,11 +8,13 @@ import { Url } from './dominio/entity/url.entity';
 import { CreateUrlDto } from './dominio/dto/createUrl.dto';
 import { UpdateUrlDto } from './dominio/dto/updateUrl.dto';
 import { ConfigService } from '@nestjs/config';
+import { Click } from './dominio/entity/clicks.entity';
 
 @Injectable()
 export class AppService {
   constructor(
     @InjectRepository(Url) private urlRepository: Repository<Url>,
+    @InjectRepository(Click) private clickRepository: Repository<Click>,
     private configService: ConfigService,
   ) {}
 
@@ -63,6 +65,12 @@ export class AppService {
   async get(code: string) {
     const url = await this.urlRepository.findOneByOrFail({
       code,
+    });
+
+    this.clickRepository.save({
+      url: {
+        id: url.id,
+      },
     });
 
     return { url: url.url, statusCode: 302 };

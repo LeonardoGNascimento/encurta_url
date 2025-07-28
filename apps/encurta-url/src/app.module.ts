@@ -6,6 +6,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { Url } from './dominio/entity/url.entity';
 import { AuthModule } from '../../../shared/auth/auth.module';
+import { Click } from './dominio/entity/clicks.entity';
 
 @Module({
   imports: [
@@ -23,11 +24,11 @@ import { AuthModule } from '../../../shared/auth/auth.module';
         username: config.get('DATABASE_USER'),
         password: config.get('DATABASE_PASSWORD'),
         database: config.get('DATABASE_SCHEMA_URL'),
-        entities: [Url],
+        entities: [Url, Click],
         synchronize: true,
       }),
     }),
-    TypeOrmModule.forFeature([Url]),
+    TypeOrmModule.forFeature([Url, Click]),
   ],
   controllers: [AppController],
   providers: [AppService],

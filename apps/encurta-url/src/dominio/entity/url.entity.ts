@@ -4,9 +4,11 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Click } from './clicks.entity';
 
 @Entity()
 export class Url {
@@ -30,4 +32,7 @@ export class Url {
 
   @Column({ nullable: true })
   deleted: Date;
+
+  @OneToMany(() => Click, (click) => click.url)
+  clicks: Click[]
 }
