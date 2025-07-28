@@ -1,5 +1,24 @@
 version: '3.9'
 services:
+  url: 
+    build: 
+      dockerfile: dockerfile
+      context: .
+    entrypoint: npm run start:dev encurta-url
+    volumes:
+      - ./:/app
+    networks:
+      - my-bridge-network
+  usuarios: 
+    build: 
+      dockerfile: dockerfile
+      context: .
+    entrypoint: npm run start:dev usuario
+    volumes:
+      - ./:/app
+    networks:
+      - my-bridge-network
+
   krakend:
     image: devopsfaith/krakend:2.4
     container_name: krakend
@@ -7,7 +26,9 @@ services:
       - ./krakend.json:/etc/krakend/krakend.json
     ports:
       - "8080:8080"
-    command: ["run", "-d", "-c", "/etc/krakend/krakend.json"]
+    command: ["run", "-d", "-c", "/etc/krakend/krakend.json", "-w"]
+    networks:
+      - my-bridge-network
 
 
   mariadb:
@@ -16,6 +37,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: usuarios
+    volumes:
+      - ./mariadb_data:/var/lib/mysql
     ports:
       - "3306:3306"
     networks:

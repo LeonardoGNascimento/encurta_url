@@ -10,7 +10,7 @@
       "input_headers": ["Authorization"],
       "backend": [
         {
-          "host": ["http://192.168.0.17:3001"],
+          "host": ["url:3001"],
           "url_pattern": "/",
           "method": "POST",
           "encoding": "no-op",
@@ -25,7 +25,7 @@
       "input_headers": ["Authorization"],
       "backend": [
         {
-          "host": ["http://192.168.0.17:3001"],
+          "host": ["url:3001"],
           "url_pattern": "/",
           "method": "GET",
           "encoding": "no-op",
@@ -39,7 +39,7 @@
       "output_encoding": "no-op",
       "backend": [
         {
-          "host": ["http://192.168.0.17:3000"],
+          "host": ["usuarios:3000"],
           "url_pattern": "/",
           "method": "POST",
           "encoding": "no-op"
@@ -52,7 +52,7 @@
       "output_encoding": "no-op",
       "backend": [
         {
-          "host": ["http://192.168.0.17:3000"],
+          "host": ["usuarios:3000"],
           "url_pattern": "/login",
           "method": "POST",
           "encoding": "no-op"
