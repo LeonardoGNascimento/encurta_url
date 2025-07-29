@@ -32,15 +32,14 @@ services:
     networks:
       - my-bridge-network
 
-
   mariadb:
     image: mariadb:latest
     container_name: mariadb-compose
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: usuarios
     volumes:
       - ./mariadb_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "3306:3306"
     networks:
