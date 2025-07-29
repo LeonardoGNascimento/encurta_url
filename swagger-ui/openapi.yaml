@@ -86,15 +86,12 @@ paths:
             schema:
               $ref: '#/components/schemas/LoginDto'
       responses:
-        '201':
+        '200':
           description: Usuário logado com sucesso
           content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  url:
-                    type: string
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginResponseDto'
 
 
 components:
@@ -152,3 +149,11 @@ components:
       required:
         - email
         - password
+
+  LoginResponseDto:
+    type: object
+    properties:
+      accessToken:
+        type: string
+    required:
+      - accessToken
