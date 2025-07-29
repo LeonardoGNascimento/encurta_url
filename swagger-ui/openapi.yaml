@@ -1,0 +1,154 @@
+openapi: 3.0.3
+info:
+  title: URL Service API
+  version: 0.4.6
+
+paths:
+  /:
+    get:
+      summary: Lista URLs do usuário
+      tags: [Url]
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Lista de URLs
+
+    post:
+      summary: Cria uma URL encurtada
+      tags: [Url]
+      security:
+        - optionalBearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUrlDto'
+      responses:
+        '201':
+          description: URL criada com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  url:
+                    type: string
+
+  /{code}:
+    get:
+      summary: Redireciona para a URL original
+      tags: [Url]
+      parameters:
+        - name: code
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '302':
+          description: Redirecionamento
+
+  /user:
+    post:
+      summary: Cria um usuário
+      tags: [User]
+      security:
+        - optionalBearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserDto'
+      responses:
+        '201':
+          description: Usuário criado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  url:
+                    type: string
+
+  /user/login:
+    post:
+      summary: Loga um usuário
+      tags: [User]
+      security:
+        - optionalBearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginDto'
+      responses:
+        '201':
+          description: Usuário logado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  url:
+                    type: string
+
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+    optionalBearerAuth:
+      type: http
+      scheme: bearer
+
+  schemas:
+    CreateUrlDto:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+      required:
+        - url
+
+    UpdateUrlDto:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+
+    CreateUserDto:
+      type: object
+      properties:
+        name:
+          type: string
+          format: uri
+        email:
+          type: string
+          format: uri
+        password:
+          type: string
+          format: uri
+      required:
+        - name
+        - email
+        - password
+
+    LoginDto:
+      type: object
+      properties:
+        email:
+          type: string
+          format: uri
+        password:
+          type: string
+          format: uri
+      required:
+        - email
+        - password

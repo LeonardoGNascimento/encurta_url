@@ -25,6 +25,7 @@ services:
       - "9000:80"
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./swagger-ui:/usr/share/nginx/html/docs
     depends_on:
       - user
       - url
