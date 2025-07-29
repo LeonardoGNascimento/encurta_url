@@ -1,23 +1,23 @@
 version: '3.9'
 services:
-  url: 
-    build: 
-      dockerfile: dockerfile
-      context: .
-    entrypoint: npm run start:dev url
-    volumes:
-      - ./:/app
-    networks:
-      - my-bridge-network
-  user: 
-    build: 
-      dockerfile: dockerfile
-      context: .
-    entrypoint: npm run start:dev user
-    volumes:
-      - ./:/app
-    networks:
-      - my-bridge-network
+  # url: 
+  #   build: 
+  #     dockerfile: dockerfile
+  #     context: .
+  #   entrypoint: npm run start:dev url
+  #   volumes:
+  #     - ./:/app
+  #   networks:
+  #     - my-bridge-network
+  # user: 
+  #   build: 
+  #     dockerfile: dockerfile
+  #     context: .
+  #   entrypoint: npm run start:dev user
+  #   volumes:
+  #     - ./:/app
+  #   networks:
+  #     - my-bridge-network
 
   nginx:
     image: nginx:stable
@@ -32,18 +32,18 @@ services:
     networks:
       - my-bridge-network
 
-  mariadb:
-    image: mariadb:latest
-    container_name: mariadb-compose
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-    volumes:
-      - ./mariadb_data:/var/lib/mysql
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-    ports:
-      - "3306:3306"
-    networks:
-      - my-bridge-network
+  # mariadb:
+  #   image: mariadb:latest
+  #   container_name: mariadb-compose
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: root
+  #   volumes:
+  #     - ./mariadb_data:/var/lib/mysql
+  #     - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+  #   ports:
+  #     - "3306:3306"
+  #   networks:
+  #     - my-bridge-network
 
 networks:
   my-bridge-network:  # Defina uma rede personalizada
