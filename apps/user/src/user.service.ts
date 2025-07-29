@@ -4,26 +4,23 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
-import { Repository } from 'typeorm';
 import { CreateUserDto } from './domain/dto/createUser.dto';
 import { LoginDto } from './domain/dto/login.dto';
 import { User } from './domain/entity/user.entity';
+import { UserRepository } from './user.repository';
 
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(User) private urls: Repository<User>,
+    private userRepository: UserRepository,
     private jwtService: JwtService,
   ) {}
 
   async create(createUsuarioDto: CreateUserDto): Promise<User> {
-    const existingUser = await this.urls.findOne({
-      where: {
-        email: createUsuarioDto.email,
-      },
-    });
+    const existingUser = await this.userRepository.findByEmail(
+      createUsuarioDto.email,
+    );
 
     if (existingUser) {
       throw new ConflictException('Email is already in use');
@@ -34,18 +31,14 @@ export class UserService {
       10,
     );
 
-    return await this.urls.save({
+    return await this.userRepository.create({
       ...createUsuarioDto,
-      senha: hashedPassword,
+      password: hashedPassword,
     });
   }
 
   async login(loginDto: LoginDto) {
-    const usuario = await this.urls.findOne({
-      where: {
-        email: loginDto.email,
-      },
-    });
+    const usuario = await this.userRepository.findByEmail(loginDto.email);
 
     if (!usuario) {
       throw new UnauthorizedException('Invalid credentials');
