@@ -20,7 +20,7 @@ export class Url {
   url: string;
 
   @Column({ nullable: true })
-  usuarioId: number;
+  userId: number;
 
   @CreateDateColumn()
   createdAt: Date;

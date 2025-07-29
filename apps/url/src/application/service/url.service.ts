@@ -1,6 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { CreateUrlDto } from '../../domain/dto/createUrl.dto';
+import { CreateUrlReturnDto } from '../../domain/dto/createUrl.return.dto';
+import { DeleteUrlDto } from '../../domain/dto/deleteUrl.dto';
+import { FindByIdAndUserDto } from '../../domain/dto/findByIdAndUser.dto';
+import { GetUrlReturnDto } from '../../domain/dto/getUrl.return.dto';
+import { ListUrlsReturnDto } from '../../domain/dto/listUrls.return.dto';
 import { UpdateUrlDto } from '../../domain/dto/updateUrl.dto';
 import { ClickRepository } from '../../infra/click.repository';
 import { UrlRepository } from '../../infra/url.repository';
@@ -24,13 +29,13 @@ export class UrlService {
     return resultado;
   }
 
-  async list(usuarioId: any) {
+  async list(usuarioId: number): Promise<ListUrlsReturnDto[]> {
     return this.urlRepository.list(usuarioId);
   }
 
-  async findByIdAndUser({ usuarioId, id }: any) {
+  async findByIdAndUser({ userId, id }: FindByIdAndUserDto) {
     const url = await this.urlRepository.findByIdAndUser({
-      usuarioId,
+      userId,
       id,
     });
 
@@ -41,19 +46,21 @@ export class UrlService {
     return url;
   }
 
-  async delete(data: any) {
+  async delete(data: DeleteUrlDto): Promise<boolean> {
     await this.findByIdAndUser(data);
-
     return await this.urlRepository.delete(data.id);
   }
 
-  async update(data: UpdateUrlDto) {
-    await this.findByIdAndUser(data);
+  async update(data: UpdateUrlDto): Promise<boolean> {
+    await this.findByIdAndUser({
+      id: data.id,
+      userId: data.userId,
+    });
 
     return await this.urlRepository.update({ id: data.id, url: data.url });
   }
 
-  async get(code: string) {
+  async get(code: string): Promise<GetUrlReturnDto> {
     const url = await this.urlRepository.get(code);
 
     if (!url) {
@@ -65,7 +72,7 @@ export class UrlService {
     return { url: url.url, statusCode: 302 };
   }
 
-  async create(body: CreateUrlDto) {
+  async create(body: CreateUrlDto): Promise<CreateUrlReturnDto> {
     let code = this.gerarStringAleatoria();
 
     const codeFind = await this.urlRepository.get(body.code);
@@ -80,6 +87,6 @@ export class UrlService {
       usuarioId: body.usuarioId,
     });
 
-    return `${this.configService.get('URL')}/${code}`;
+    return { url: `${this.configService.get('URL')}/${code}` };
   }
 }

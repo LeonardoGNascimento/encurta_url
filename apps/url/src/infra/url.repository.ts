@@ -1,15 +1,16 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { IsNull, Repository } from 'typeorm';
-import { Url } from '../domain/entity/url.entity';
-import { UpdateUrlDto } from '../domain/dto/updateUrl.dto';
 import { CreateUrlDto } from '../domain/dto/createUrl.dto';
+import { FindByIdAndUserDto } from '../domain/dto/findByIdAndUser.dto';
+import { ListUrlsReturnDto } from '../domain/dto/listUrls.return.dto';
+import { Url } from '../domain/entity/url.entity';
 
 @Injectable()
 export class UrlRepository {
   constructor(@InjectRepository(Url) private urlRepository: Repository<Url>) {}
 
-  async list(usuarioId: any) {
+  async list(userId: number): Promise<ListUrlsReturnDto[]> {
     return this.urlRepository
       .find({
         relations: {
@@ -17,28 +18,30 @@ export class UrlRepository {
         },
         where: {
           deleted: IsNull(),
-          usuarioId,
+          userId,
         },
       })
       .then((item) => {
-        return item.map(({ clicks, ...item2 }) => ({
-          ...item2,
-          clicks: clicks.length,
-        }));
+        return item.map(
+          ({ clicks, ...item2 }): ListUrlsReturnDto => ({
+            ...item2,
+            totalClicks: clicks.length,
+          }),
+        );
       });
   }
 
-  async findByIdAndUser({ usuarioId, id }: any) {
+  async findByIdAndUser({ userId, id }: FindByIdAndUserDto) {
     return await this.urlRepository.findOne({
       where: {
         id,
-        usuarioId,
+        userId,
         deleted: IsNull(),
       },
     });
   }
 
-  async delete(id: number) {
+  async delete(id: number): Promise<boolean> {
     return await this.urlRepository
       .update(
         {
@@ -51,13 +54,15 @@ export class UrlRepository {
       .then((item) => (item.affected ? item.affected > 0 : false));
   }
 
-  async update(data: UpdateUrlDto) {
-    return await this.urlRepository.update(
-      { id: data.id },
-      {
-        url: data.url,
-      },
-    );
+  async update(data: Partial<Url>): Promise<boolean> {
+    return await this.urlRepository
+      .update(
+        { id: data.id },
+        {
+          url: data.url,
+        },
+      )
+      .then((item) => (item.affected ? item.affected > 0 : false));
   }
 
   async get(code: string) {

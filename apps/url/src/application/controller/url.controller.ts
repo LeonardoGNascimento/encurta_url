@@ -11,11 +11,13 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { UrlService } from '../service/url.service';
+import { Request } from 'express';
 import { AuthGuard } from 'shared/core/auth.guard';
 import { AuthOptionalGuard } from 'shared/core/authOptional.guard';
 import { CreateUrlDto } from '../../domain/dto/createUrl.dto';
+import { ListUrlsReturnDto } from '../../domain/dto/listUrls.return.dto';
 import { UpdateUrlDto } from '../../domain/dto/updateUrl.dto';
+import { UrlService } from '../service/url.service';
 
 @Controller()
 export class UrlController {
@@ -23,20 +25,24 @@ export class UrlController {
 
   @UseGuards(AuthGuard)
   @Get()
-  list(@Req() req: any) {
-    return this.service.list(req.user?.id);
+  list(@Req() { user }: Request): Promise<ListUrlsReturnDto[]> {
+    return this.service.list(user.id);
   }
 
   @UseGuards(AuthGuard)
   @Delete(':id')
-  delete(@Req() req: any, @Param('id') id: number) {
-    return this.service.delete({ usuarioId: req.user?.id, id });
+  delete(@Req() { user }: Request, @Param('id') id: number): Promise<boolean> {
+    return this.service.delete({ userId: user.id, id });
   }
 
   @UseGuards(AuthGuard)
   @Patch(':id')
-  update(@Req() req: any, @Param('id') id: number, @Body() body: UpdateUrlDto) {
-    return this.service.update({ ...body, usuarioId: req.user?.id, id });
+  update(
+    @Req() { user }: Request,
+    @Param('id') id: number,
+    @Body() body: UpdateUrlDto,
+  ): Promise<boolean> {
+    return this.service.update({ ...body, userId: user.id, id });
   }
 
   @Get(':code')
@@ -48,14 +54,10 @@ export class UrlController {
 
   @UseGuards(AuthOptionalGuard)
   @Post()
-  async create(@Req() req: any, @Body() body: CreateUrlDto) {
-    const code = await this.service.create({
+  create(@Req() req: Request, @Body() body: CreateUrlDto) {
+    return this.service.create({
       ...body,
       usuarioId: req?.user?.id,
     });
-
-    return {
-      url: code,
-    };
   }
 }

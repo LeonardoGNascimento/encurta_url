@@ -5,5 +5,5 @@ export class UpdateUrlDto {
   url: string;
 
   id: number;
-  usuarioId?: number;
+  userId: number;
 }
