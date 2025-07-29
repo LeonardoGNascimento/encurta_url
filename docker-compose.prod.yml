@@ -1,25 +1,21 @@
 version: '3.9'
 services:
-  url: 
-    build: 
+  url:
+    build:
       dockerfile: dockerfile.prod
       context: .
     entrypoint: npm run start:prod url
     depends_on:
       - mariadb
-    volumes:
-      - ./:/app
     networks:
       - my-bridge-network
-  user: 
-    build: 
+  user:
+    build:
       dockerfile: dockerfile.prod
       context: .
     entrypoint: npm run start:prod user
     depends_on:
       - mariadb
-    volumes:
-      - ./:/app
     networks:
       - my-bridge-network
 
@@ -46,5 +42,5 @@ services:
       - my-bridge-network
 
 networks:
-  my-bridge-network:  # Defina uma rede personalizada
+  my-bridge-network: # Defina uma rede personalizada
     driver: bridge
