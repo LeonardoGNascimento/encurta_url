@@ -5,8 +5,6 @@ services:
       dockerfile: dockerfile.prod
       context: .
     entrypoint: npm run start url
-    depends_on:
-      - mariadb
     networks:
       - my-bridge-network
   user:
@@ -14,8 +12,6 @@ services:
       dockerfile: dockerfile.prod
       context: .
     entrypoint: npm run start user
-    depends_on:
-      - mariadb
     networks:
       - my-bridge-network
 
@@ -27,17 +23,6 @@ services:
     depends_on:
       - user
       - url
-    networks:
-      - my-bridge-network
-
-  mariadb:
-    image: mariadb:latest
-    container_name: mariadb-compose
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-    volumes:
-      - ./mariadb_data:/var/lib/mysql
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - my-bridge-network
 
