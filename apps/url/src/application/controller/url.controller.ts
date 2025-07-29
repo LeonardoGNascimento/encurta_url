@@ -8,12 +8,12 @@ import {
   Patch,
   Post,
   Redirect,
-  Req,
   UseGuards,
 } from '@nestjs/common';
-import { Request } from 'express';
+import { User } from 'apps/user/src/domain/entity/user.entity';
 import { AuthGuard } from 'shared/core/auth.guard';
 import { AuthOptionalGuard } from 'shared/core/authOptional.guard';
+import { GetUser } from 'shared/core/getUser.decorator';
 import { CreateUrlDto } from '../../domain/dto/createUrl.dto';
 import { ListUrlsReturnDto } from '../../domain/dto/listUrls.return.dto';
 import { UpdateUrlDto } from '../../domain/dto/updateUrl.dto';
@@ -25,20 +25,20 @@ export class UrlController {
 
   @UseGuards(AuthGuard)
   @Get()
-  list(@Req() { user }: Request): Promise<ListUrlsReturnDto[]> {
+  list(@GetUser() user: User): Promise<ListUrlsReturnDto[]> {
     return this.service.list(user.id);
   }
 
   @UseGuards(AuthGuard)
   @Delete(':id')
-  delete(@Req() { user }: Request, @Param('id') id: number): Promise<boolean> {
+  delete(@GetUser() user: User, @Param('id') id: number): Promise<boolean> {
     return this.service.delete({ userId: user.id, id });
   }
 
   @UseGuards(AuthGuard)
   @Patch(':id')
   update(
-    @Req() { user }: Request,
+    @GetUser() user: User,
     @Param('id') id: number,
     @Body() body: UpdateUrlDto,
   ): Promise<boolean> {
@@ -54,10 +54,10 @@ export class UrlController {
 
   @UseGuards(AuthOptionalGuard)
   @Post()
-  create(@Req() req: Request, @Body() body: CreateUrlDto) {
+  create(@GetUser() user: User, @Body() body: CreateUrlDto) {
     return this.service.create({
       ...body,
-      usuarioId: req?.user?.id,
+      usuarioId: user?.id,
     });
   }
 }
