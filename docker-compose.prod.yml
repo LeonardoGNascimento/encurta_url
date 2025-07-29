@@ -2,7 +2,7 @@ version: '3.9'
 services:
   url: 
     build: 
-      dockerfile: dockerfile
+      dockerfile: dockerfile.prod
       context: .
     entrypoint: npm run start:prod url
     volumes:
@@ -11,7 +11,7 @@ services:
       - my-bridge-network
   user: 
     build: 
-      dockerfile: dockerfile
+      dockerfile: dockerfile.prod
       context: .
     entrypoint: npm run start:prod user
     volumes:
