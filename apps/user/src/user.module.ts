@@ -3,9 +3,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from 'shared/auth/auth.module';
 import { User } from './domain/entity/user.entity';
-import { UserController } from './user.controller';
-import { UserRepository } from './user.repository';
-import { UserService } from './user.service';
+import { UserService } from './application/service/user.service';
+import { UserRepository } from './infra/user.repository';
+import { UserController } from './application/controller/user.controller';
 
 @Module({
   imports: [

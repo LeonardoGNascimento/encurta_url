@@ -11,12 +11,11 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
-
-import { AuthGuard } from '../../../shared/core/auth.guard';
-import { AuthOptionalGuard } from '../../../shared/core/authOptional.guard';
-import { CreateUrlDto } from './domain/dto/createUrl.dto';
-import { UpdateUrlDto } from './domain/dto/updateUrl.dto';
-import { UrlService } from './url.service';
+import { UrlService } from '../service/url.service';
+import { AuthGuard } from 'shared/core/auth.guard';
+import { AuthOptionalGuard } from 'shared/core/authOptional.guard';
+import { CreateUrlDto } from '../../domain/dto/createUrl.dto';
+import { UpdateUrlDto } from '../../domain/dto/updateUrl.dto';
 
 @Controller()
 export class UrlController {

@@ -5,10 +5,10 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { CreateUserDto } from './domain/dto/createUser.dto';
-import { LoginDto } from './domain/dto/login.dto';
-import { User } from './domain/entity/user.entity';
-import { UserRepository } from './user.repository';
+import { CreateUserDto } from '../../domain/dto/createUser.dto';
+import { LoginDto } from '../../domain/dto/login.dto';
+import { User } from '../../domain/entity/user.entity';
+import { UserRepository } from '../../infra/user.repository';
 
 @Injectable()
 export class UserService {
