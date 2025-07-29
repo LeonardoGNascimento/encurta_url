@@ -5,6 +5,6 @@ import { UrlModule } from './url.module';
 async function bootstrap() {
   const app = await NestFactory.create(UrlModule);
   app.useGlobalPipes(new ValidationPipe());
-  await app.listen(process.env.PORT ?? 3001);
+  await app.listen(3000);
 }
 bootstrap();
