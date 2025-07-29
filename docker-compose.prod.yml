@@ -4,7 +4,7 @@ services:
     build:
       dockerfile: dockerfile.prod
       context: .
-    entrypoint: npm run start:prod url
+    entrypoint: npm run start url
     depends_on:
       - mariadb
     networks:
@@ -13,7 +13,7 @@ services:
     build:
       dockerfile: dockerfile.prod
       context: .
-    entrypoint: npm run start:prod user
+    entrypoint: npm run start user
     depends_on:
       - mariadb
     networks:
