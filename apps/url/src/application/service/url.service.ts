@@ -84,7 +84,7 @@ export class UrlService {
     await this.urlRepository.create({
       code,
       url: body.url.includes('https') ? body.url : `https://${body.url}`,
-      usuarioId: body.usuarioId,
+      userId: body.userId,
     });
 
     return { url: `${this.configService.get('URL')}/${code}` };

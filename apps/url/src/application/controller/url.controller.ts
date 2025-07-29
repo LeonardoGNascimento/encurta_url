@@ -57,7 +57,7 @@ export class UrlController {
   create(@GetUser() user: User, @Body() body: CreateUrlDto) {
     return this.service.create({
       ...body,
-      usuarioId: user?.id,
+      userId: user?.id,
     });
   }
 }

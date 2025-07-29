@@ -5,5 +5,5 @@ export class CreateUrlDto {
   url: string;
 
   code: string;
-  usuarioId?: number;
+  userId?: number;
 }

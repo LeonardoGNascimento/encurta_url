@@ -75,7 +75,7 @@ export class UrlRepository {
     return await this.urlRepository.save({
       code: body.code,
       url: body.url,
-      usuarioId: body.usuarioId,
+      userId: body.userId,
     });
   }
 }
