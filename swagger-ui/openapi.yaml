@@ -180,7 +180,7 @@ paths:
                     example: 404
 
 
-  /user:
+  /user/:
     post:
       summary: Creates a user
       tags: [User]
