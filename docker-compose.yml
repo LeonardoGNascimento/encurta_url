@@ -9,6 +9,7 @@ services:
       - ./:/app
     networks:
       - my-bridge-network
+
   user:
     build:
       dockerfile: dockerfile
@@ -45,6 +46,14 @@ services:
     networks:
       - my-bridge-network
 
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - my-bridge-network
 networks:
-  my-bridge-network: # Defina uma rede personalizada
+  my-bridge-network:
     driver: bridge

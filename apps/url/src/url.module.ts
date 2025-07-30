@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { MetricsController } from 'shared/metrics/metrics.controller';
+import { MetricsService } from 'shared/metrics/metrics.service';
 import { AuthModule } from '../../../shared/auth/auth.module';
 import { UrlController } from './application/controller/url.controller';
 import { UrlService } from './application/service/url.service';
@@ -31,7 +33,7 @@ import { UrlRepository } from './infra/url.repository';
     }),
     TypeOrmModule.forFeature([Url, Click]),
   ],
-  controllers: [UrlController],
-  providers: [UrlService, UrlRepository, ClickRepository],
+  controllers: [MetricsController, UrlController],
+  providers: [UrlService, UrlRepository, ClickRepository, MetricsService],
 })
 export class UrlModule {}

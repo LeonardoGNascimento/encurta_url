@@ -9,16 +9,19 @@ import {
   Post,
   Redirect,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { User } from 'apps/user/src/domain/entity/user.entity';
 import { AuthGuard } from 'shared/core/auth.guard';
 import { AuthOptionalGuard } from 'shared/core/authOptional.guard';
 import { GetUser } from 'shared/core/getUser.decorator';
+import { MetricsInterceptor } from 'shared/metrics/metrics.interceptor';
 import { CreateUrlDto } from '../../domain/dto/createUrl.dto';
 import { ListUrlsReturnDto } from '../../domain/dto/listUrls.return.dto';
 import { UpdateUrlDto } from '../../domain/dto/updateUrl.dto';
 import { UrlService } from '../service/url.service';
 
+@UseInterceptors(MetricsInterceptor)
 @Controller()
 export class UrlController {
   constructor(private service: UrlService) {}
