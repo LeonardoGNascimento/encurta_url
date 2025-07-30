@@ -24,6 +24,12 @@ Para acessar a documentação da API (Swagger), acesse o endpoint:
 
 http://localhost:9000/docs/
 
+## Client API
+
+Para facilitar o uso da API, disponibilizei um arquivo chamado encurta.json, configurado para o Postman. Ele contém todas as rotas preparadas para que você possa testar rapidamente.
+
+Lembre-se que o token salvo nesse arquivo é apenas um exemplo. Para usar a API corretamente, é necessário criar um usuário e realizar o login para obter um token válido.
+
 ## Executando os testes
 
 Para rodar os testes automatizados, utilize o comando:
@@ -39,3 +45,7 @@ Para facilitar os testes das funcionalidades desta API, foi criado um front-end 
 Você pode acessá-lo pelo seguinte link:
 
 https://shorturl.legana.com.br/
+
+## Metricas
+
+O projeto foi configurado para salvar métricas utilizando a biblioteca prom-client. O registro das métricas pode ser ativado ou desativado por meio de uma variável de ambiente (env).

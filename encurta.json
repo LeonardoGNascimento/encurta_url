@@ -1,0 +1,338 @@
+{
+  "info": {
+    "name": "encurta",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Url",
+      "item": [
+        {
+          "name": "Listar",
+          "event": [],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": {
+                "key": "token",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJsZW8zQGxlby5jb20iLCJuYW1lIjoibGVvIiwiY3JlYXRlZEF0IjoiMjAyNS0wNy0zMFQxMDo0NDowOC4yOTJaIiwidXBkYXRlZEF0IjoiMjAyNS0wNy0zMFQxMDo0NDowOC4yOTJaIiwiZGVsZXRlZCI6bnVsbCwiaWF0IjoxNzUzODcyNDcwLCJleHAiOjE3NTM4NzYwNzB9.dGjDwGW11bwSQpFPMjYE-DdzxqojOLWcHhZ2boN47qE",
+                "type": "string"
+              }
+            },
+            "description": "",
+            "url": {
+              "raw": "http://localhost:9000",
+              "protocol": "http",
+              "host": [
+                "localhost:9000"
+              ],
+              "path": [],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Acessar",
+          "event": [],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "http://localhost:9000/:code",
+              "protocol": "http",
+              "host": [
+                "localhost:9000"
+              ],
+              "path": [
+                ":code"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "code",
+                  "value": "Code"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Criar",
+          "event": [],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": {
+                "key": "token",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJsZW8zQGxlby5jb20iLCJuYW1lIjoibGVvIiwiY3JlYXRlZEF0IjoiMjAyNS0wNy0zMFQxMDo0NDowOC4yOTJaIiwidXBkYXRlZEF0IjoiMjAyNS0wNy0zMFQxMDo0NDowOC4yOTJaIiwiZGVsZXRlZCI6bnVsbCwiaWF0IjoxNzUzODcyNDcwLCJleHAiOjE3NTM4NzYwNzB9.dGjDwGW11bwSQpFPMjYE-DdzxqojOLWcHhZ2boN47qE",
+                "type": "string"
+              }
+            },
+            "description": "",
+            "url": {
+              "raw": "http://localhost:9000",
+              "protocol": "http",
+              "host": [
+                "localhost:9000"
+              ],
+              "path": [],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"url\": \"www.asd\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Update",
+          "event": [],
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": {
+                "key": "token",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJsZW9AbGVvLmNvbSIsIm5vbWUiOiJMZW8iLCJjcmVhdGVkQXQiOiIyMDI1LTA3LTI4VDAxOjE3OjAyLjIyOFoiLCJ1cGRhdGVkQXQiOiIyMDI1LTA3LTI4VDAxOjE3OjAyLjIyOFoiLCJkZWxldGVkIjpudWxsLCJpYXQiOjE3NTM2NzA0ODIsImV4cCI6MTc1MzY3NDA4Mn0.KfT_3N040PCyC38FH6ys47fwK9w7ald7ydao3PQFv54",
+                "type": "string"
+              }
+            },
+            "description": "",
+            "url": {
+              "raw": "http://localhost:9000/:id",
+              "protocol": "http",
+              "host": [
+                "localhost:9000"
+              ],
+              "path": [
+                ":id"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"url\": \"https://leo.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Deletar",
+          "event": [],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": {
+                "key": "token",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJsZW8zQGxlby5jb20iLCJuYW1lIjoibGVvIiwiY3JlYXRlZEF0IjoiMjAyNS0wNy0zMFQxMDo0NDowOC4yOTJaIiwidXBkYXRlZEF0IjoiMjAyNS0wNy0zMFQxMDo0NDowOC4yOTJaIiwiZGVsZXRlZCI6bnVsbCwiaWF0IjoxNzUzODcyNDcwLCJleHAiOjE3NTM4NzYwNzB9.dGjDwGW11bwSQpFPMjYE-DdzxqojOLWcHhZ2boN47qE",
+                "type": "string"
+              }
+            },
+            "description": "",
+            "url": {
+              "raw": "http://localhost:9000/:id",
+              "protocol": "http",
+              "host": [
+                "localhost:9000"
+              ],
+              "path": [
+                ":id"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Metricas",
+          "event": [],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": {
+                "key": "token",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImVtYWlsIjoibGVvM0BsZW8uY29tIiwibmFtZSI6ImxlbyIsImNyZWF0ZWRBdCI6IjIwMjUtMDctMjlUMjM6NDQ6MTkuMDExWiIsInVwZGF0ZWRBdCI6IjIwMjUtMDctMjlUMjM6NDQ6MTkuMDExWiIsImRlbGV0ZWQiOm51bGwsImlhdCI6MTc1MzgzMjY3MSwiZXhwIjoxNzUzODM2MjcxfQ.JXggFmvgpYuIDik6RSVuv1AjHqSj0l2c8LmEgsHS8fI",
+                "type": "string"
+              }
+            },
+            "description": "",
+            "url": {
+              "raw": "http://localhost:9000/metrics",
+              "protocol": "http",
+              "host": [
+                "localhost:9000"
+              ],
+              "path": [
+                "metrics"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "User",
+      "item": [
+        {
+          "name": "Criar",
+          "event": [],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": {
+                "key": "token",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZXN0ZSI6ImV0c3RlIiwiaWF0IjoxNzUzNDg1MzEyLCJleHAiOjE3NTM0ODUzNzJ9.MGu13aOz1uAPhFKp0H4y-S1vwk_fklKdJoP5W6eY3L4",
+                "type": "string"
+              }
+            },
+            "description": "",
+            "url": {
+              "raw": "http://localhost:9000/user/",
+              "protocol": "http",
+              "host": [
+                "localhost:9000"
+              ],
+              "path": [
+                "user",
+                ""
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"leo\",\n  \"email\": \"leo3@leo.com\",\n  \"password\": \"123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "event": [],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": {
+                "key": "token",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZXN0ZSI6ImV0c3RlIiwiaWF0IjoxNzUzNDg1MjI0LCJleHAiOjE3NTM0ODUyODR9.OXg0j8Q8cIrh0h56qDbOWOKBffoWDukcC3l3d_gahDM",
+                "type": "string"
+              }
+            },
+            "description": "",
+            "url": {
+              "raw": "http://localhost:9000/user/login",
+              "protocol": "http",
+              "host": [
+                "localhost:9000"
+              ],
+              "path": [
+                "user",
+                "login"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"leo3@leo.com\",\n  \"password\": \"123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Metricas",
+          "event": [],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": {
+                "key": "token",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImVtYWlsIjoibGVvM0BsZW8uY29tIiwibmFtZSI6ImxlbyIsImNyZWF0ZWRBdCI6IjIwMjUtMDctMjlUMjM6NDQ6MTkuMDExWiIsInVwZGF0ZWRBdCI6IjIwMjUtMDctMjlUMjM6NDQ6MTkuMDExWiIsImRlbGV0ZWQiOm51bGwsImlhdCI6MTc1MzgzMjY3MSwiZXhwIjoxNzUzODM2MjcxfQ.JXggFmvgpYuIDik6RSVuv1AjHqSj0l2c8LmEgsHS8fI",
+                "type": "string"
+              }
+            },
+            "description": "",
+            "url": {
+              "raw": "http://localhost:9000/user/metrics",
+              "protocol": "http",
+              "host": [
+                "localhost:9000"
+              ],
+              "path": [
+                "user",
+                "metrics"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base",
+      "value": "",
+      "type": "default"
+    }
+  ]
+}
