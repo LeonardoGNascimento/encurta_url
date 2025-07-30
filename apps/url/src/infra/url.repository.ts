@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { IsNull, Repository } from 'typeorm';
-import { CreateUrlDto } from '../domain/dto/createUrl.dto';
 import { FindByIdAndUserDto } from '../domain/dto/findByIdAndUser.dto';
 import { ListUrlsReturnDto } from '../domain/dto/listUrls.return.dto';
 import { Url } from '../domain/entity/url.entity';
@@ -65,13 +64,14 @@ export class UrlRepository {
       .then((item) => (item.affected ? item.affected > 0 : false));
   }
 
-  async get(code: string) {
+  async get(code: string): Promise<Url | null> {
     return await this.urlRepository.findOneBy({
       code,
+      deleted: IsNull(),
     });
   }
 
-  async create(body: CreateUrlDto) {
+  async create(body: Partial<Url>): Promise<Url> {
     return await this.urlRepository.save({
       code: body.code,
       url: body.url,

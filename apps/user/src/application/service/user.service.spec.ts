@@ -19,15 +19,15 @@ describe('UserService Tests', () => {
           useValue: {
             create: jest.fn().mockResolvedValue({
               id: 1,
-              name: 'Teste',
-              email: 'teste@teste.com',
+              name: 'Test',
+              email: 'test@test.com',
               password:
                 '$2b$10$rd8YS5vks99X2pI.jKy7BOPkCqChFhMrOGDt9Gjzsk5xfeDC1j2US',
             }),
             findByEmail: jest.fn().mockResolvedValue({
               id: 1,
-              name: 'Teste',
-              email: 'teste@teste.com',
+              name: 'Test',
+              email: 'test@test.com',
               password:
                 '$2b$10$rd8YS5vks99X2pI.jKy7BOPkCqChFhMrOGDt9Gjzsk5xfeDC1j2US',
             }),
@@ -45,11 +45,11 @@ describe('UserService Tests', () => {
   });
 
   describe('create', () => {
-    it('Se email já estiver cadastrado deve retornar erro', async () => {
+    it('If email is already registered should return error', async () => {
       try {
         await userService.create({
-          email: 'teste@teste.com',
-          name: 'Teste',
+          email: 'test@test.com',
+          name: 'Test',
           password: '123',
         });
       } catch (e) {
@@ -58,25 +58,25 @@ describe('UserService Tests', () => {
       }
     });
 
-    it('Deve criar usuario', async () => {
+    it('Should create user', async () => {
       jest.spyOn(userRepository, 'findByEmail').mockResolvedValueOnce(null);
       const result = await userService.create({
-        email: 'teste@teste.com',
-        name: 'Teste',
+        email: 'test@test.com',
+        name: 'Test',
         password: '123',
       });
 
       expect(result).toBeDefined();
-      expect(result.name).toEqual('Teste');
+      expect(result.name).toEqual('Test');
     });
   });
 
   describe('login', () => {
-    it('Se não encontrar email cadastrado deve retornar erro', async () => {
+    it('If email not found should return error', async () => {
       try {
         jest.spyOn(userRepository, 'findByEmail').mockResolvedValueOnce(null);
         await userService.login({
-          email: 'teste@teste.com',
+          email: 'test@test.com',
           password: '123',
         });
       } catch (e) {
@@ -85,10 +85,10 @@ describe('UserService Tests', () => {
       }
     });
 
-    it('Se senha for invalida deve retornar erro', async () => {
+    it('If password is invalid should return error', async () => {
       try {
         await userService.login({
-          email: 'teste@teste.com',
+          email: 'test@test.com',
           password: '1233',
         });
       } catch (e) {
@@ -97,14 +97,14 @@ describe('UserService Tests', () => {
       }
     });
 
-    it('Deve logar', async () => {
+    it('Should login', async () => {
       const result = await userService.login({
-        email: 'teste@teste.com',
+        email: 'test@test.com',
         password: '123',
       });
 
       expect(result).toBeDefined();
-      expect(result.access_token).toBeDefined();
+      expect(result.accessToken).toBeDefined();
     });
   });
 });

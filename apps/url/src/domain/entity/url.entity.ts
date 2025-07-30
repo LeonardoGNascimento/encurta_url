@@ -29,7 +29,7 @@ export class Url {
   updatedAt: Date;
 
   @Column({ nullable: true })
-  deleted: Date;
+  deleted?: Date;
 
   @OneToMany(() => Click, (click) => click.url)
   clicks: Click[]

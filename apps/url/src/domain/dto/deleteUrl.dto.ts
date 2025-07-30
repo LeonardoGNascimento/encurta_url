@@ -1,4 +1,4 @@
-export class DeleteUrlDto {
+export interface DeleteUrlDto {
   id: number;
   userId: number;
 }

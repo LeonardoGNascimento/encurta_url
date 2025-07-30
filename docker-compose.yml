@@ -7,7 +7,7 @@ services:
     command: npm run start:dev url
     volumes:
       - ./:/app
-      - /app/node_modules  
+      - /app/node_modules
     depends_on:
       - mariadb
     networks:
@@ -20,7 +20,7 @@ services:
     command: npm run start:dev user
     volumes:
       - ./:/app
-      - /app/node_modules  
+      - /app/node_modules
     depends_on:
       - mariadb
     networks:
@@ -49,15 +49,6 @@ services:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - '3306:3306'
-    networks:
-      - my-bridge-network
-
-  prometheus:
-    image: prom/prometheus
-    volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
-    ports:
-      - "9090:9090"
     networks:
       - my-bridge-network
 networks:

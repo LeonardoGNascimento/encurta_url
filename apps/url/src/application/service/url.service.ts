@@ -18,7 +18,7 @@ export class UrlService {
     private configService: ConfigService,
   ) {}
 
-  gerarStringAleatoria(length: number = 6): string {
+  generateRandomString(length: number = 6): string {
     const caracteres =
       'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     let resultado = '';
@@ -73,12 +73,12 @@ export class UrlService {
   }
 
   async create(body: CreateUrlDto): Promise<CreateUrlReturnDto> {
-    let code = this.gerarStringAleatoria();
+    let code = this.generateRandomString();
 
-    const codeFind = await this.urlRepository.get(body.code);
+    const codeFind = await this.urlRepository.get(code);
 
     while (code === codeFind?.code) {
-      code = this.gerarStringAleatoria();
+      code = this.generateRandomString();
     }
 
     await this.urlRepository.create({

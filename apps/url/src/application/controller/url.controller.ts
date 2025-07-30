@@ -11,11 +11,10 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { User } from 'apps/user/src/domain/entity/user.entity';
-import { AuthGuard } from 'shared/core/auth.guard';
-import { AuthOptionalGuard } from 'shared/core/authOptional.guard';
-import { GetUser } from 'shared/core/getUser.decorator';
-import { MetricsInterceptor } from 'shared/metrics/metrics.interceptor';
+import { AuthGuard } from '../../../../../shared/core/auth.guard';
+import { AuthOptionalGuard } from '../../../../../shared/core/authOptional.guard';
+import { GetUser } from '../../../../../shared/core/getUser.decorator';
+import { MetricsInterceptor } from '../../../../../shared/metrics/metrics.interceptor';
 import { CreateUrlDto } from '../../domain/dto/createUrl.dto';
 import { ListUrlsReturnDto } from '../../domain/dto/listUrls.return.dto';
 import { UpdateUrlDto } from '../../domain/dto/updateUrl.dto';
@@ -28,24 +27,26 @@ export class UrlController {
 
   @UseGuards(AuthGuard)
   @Get()
-  list(@GetUser() user: User): Promise<ListUrlsReturnDto[]> {
+  list(@GetUser() user): Promise<ListUrlsReturnDto[]> {
     return this.service.list(user.id);
   }
 
   @UseGuards(AuthGuard)
+  @HttpCode(204)
   @Delete(':id')
-  delete(@GetUser() user: User, @Param('id') id: number): Promise<boolean> {
-    return this.service.delete({ userId: user.id, id });
+  async delete(@GetUser() user, @Param('id') id: number): Promise<void> {
+    await this.service.delete({ userId: user.id, id });
   }
 
   @UseGuards(AuthGuard)
+  @HttpCode(204)
   @Patch(':id')
-  update(
-    @GetUser() user: User,
+  async update(
+    @GetUser() user,
     @Param('id') id: number,
     @Body() body: UpdateUrlDto,
-  ): Promise<boolean> {
-    return this.service.update({ ...body, userId: user.id, id });
+  ): Promise<void> {
+    await this.service.update({ ...body, userId: user.id, id });
   }
 
   @Get(':code')
@@ -57,7 +58,7 @@ export class UrlController {
 
   @UseGuards(AuthOptionalGuard)
   @Post()
-  create(@GetUser() user: User, @Body() body: CreateUrlDto) {
+  create(@GetUser() user, @Body() body: CreateUrlDto) {
     return this.service.create({
       ...body,
       userId: user?.id,

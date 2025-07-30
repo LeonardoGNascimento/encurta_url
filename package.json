@@ -80,6 +80,18 @@
     ],
     "coverageDirectory": "./coverage",
     "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+        "node_modules",
+        "test-config",
+        "interfaces",
+        "jestGlobalMocks.ts",
+        "\\.module\\.ts",
+        "<rootDir>/apps/url/src/main.ts",
+        "<rootDir>/apps/user/src/main.ts",
+        "\\.mock\\.ts",
+        "\\.repository\\.ts",
+        "\\.entity\\.ts"
+    ],
     "roots": [
       "<rootDir>/apps/"
     ]

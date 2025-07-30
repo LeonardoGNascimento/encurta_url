@@ -13,6 +13,25 @@ paths:
       responses:
         '200':
           description: List of URLs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UrlResponseDto'
+        '401':
+          description: Unauthorized – user must be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 401
+                  message:
+                    type: string
+                    example: Unauthorized
 
     post:
       summary: Creates a shortened URL
@@ -36,6 +55,100 @@ paths:
                   url:
                     type: string
 
+  /{id}:
+    patch:
+      summary: Updates a shortened URL
+      tags: [Url]
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUrlDto'
+      responses:
+        '204':
+          description: URL successfully updated (No Content)
+        '401':
+          description: Unauthorized – user must be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 401
+                  message:
+                    type: string
+                    example: Unauthorized
+        '404':
+          description: Url not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Url not found
+                  error:
+                    type: string
+                    example: Not Found
+                  statusCode:
+                    type: integer
+                    example: 404
+            
+    delete:
+      summary: Deletes a URL by ID
+      tags: [Url]
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: URL successfully deleted (No Content)
+        '401':
+          description: Unauthorized – user must be authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 401
+                  message:
+                    type: string
+                    example: Unauthorized
+        '404':
+          description: Url not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Url not found
+                  error:
+                    type: string
+                    example: Not Found
+                  statusCode:
+                    type: integer
+                    example: 404
   /{code}:
     get:
       summary: Redirects to the original URL
@@ -49,6 +162,23 @@ paths:
       responses:
         '302':
           description: Redirection
+        '404':
+          description: Url not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Url not found
+                  error:
+                    type: string
+                    example: Not Found
+                  statusCode:
+                    type: integer
+                    example: 404
+
 
   /user:
     post:
@@ -68,10 +198,44 @@ paths:
           content:
             application/json:
               schema:
+                $ref: '#/components/schemas/UserResponseDto'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
                 type: object
                 properties:
-                  url:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  message:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - name should not be empty
+                      - email must be an email
+                      - password should not be empty
+                  error:
                     type: string
+                    example: Bad Request
+        '409':
+          description: Email already in use
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 409
+                  message:
+                    type: string
+                    example: Email is already in use
+                  error:
+                    type: string
+                    example: Conflict
 
   /user/login:
     post:
@@ -92,7 +256,42 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/LoginResponseDto'
-
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  message:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - email must be an email
+                      - password should not be empty
+                  error:
+                    type: string
+                    example: Bad Request
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Invalid credentials
+                  error:
+                    type: string
+                    example: Unauthorized
+                  statusCode:
+                    type: integer
+                    example: 401
 
 components:
   securitySchemes:
@@ -152,3 +351,64 @@ components:
           type: string
       required:
         - accessToken
+
+    UrlResponseDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        code:
+          type: string
+          example: t99L2f
+        url:
+          type: string
+          format: uri
+          example: https://www.google.com/
+        userId:
+          type: integer
+          example: 1
+        createdAt:
+          type: string
+          format: date-time
+          example: "2025-07-30T10:48:00.273Z"
+        updatedAt:
+          type: string
+          format: date-time
+          example: "2025-07-30T10:48:00.273Z"
+        deleted:
+          type: ["string", "null"]
+          nullable: true
+          example: null
+        totalClicks:
+          type: integer
+          example: 0
+
+    UserResponseDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: leo
+        email:
+          type: string
+          format: email
+          example: leo3@leo.com
+        password:
+          type: string
+          example: '$2b$10$J7QGdrc40kNz2nh5v/mRB.kuUGDfmn0hTkDc/l9VlAGmj6oVmpLZ2'
+        deleted:
+          type: ['string', 'null']
+          nullable: true
+          example: null
+        createdAt:
+          type: string
+          format: date-time
+          example: '2025-07-30T10:44:08.292Z'
+        updatedAt:
+          type: string
+          format: date-time
+          example: '2025-07-30T10:44:08.292Z'
