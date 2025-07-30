@@ -7,6 +7,7 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from '../../domain/dto/createUser.dto';
 import { LoginDto } from '../../domain/dto/login.dto';
+import { LoginReturnDto } from '../../domain/dto/login.return.dto';
 import { User } from '../../domain/entity/user.entity';
 import { UserRepository } from '../../infra/user.repository';
 
@@ -37,7 +38,7 @@ export class UserService {
     });
   }
 
-  async login(loginDto: LoginDto) {
+  async login(loginDto: LoginDto): Promise<LoginReturnDto> {
     const usuario = await this.userRepository.findByEmail(loginDto.email);
 
     if (!usuario) {
@@ -56,7 +57,7 @@ export class UserService {
     const { password, ...result } = usuario;
 
     return {
-      access_token: await this.jwtService.signAsync(result),
+      accessToken: await this.jwtService.signAsync(result),
     };
   }
 }

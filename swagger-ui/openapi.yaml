@@ -6,16 +6,16 @@ info:
 paths:
   /:
     get:
-      summary: Lista URLs do usuário
+      summary: Lists user's URLs
       tags: [Url]
       security:
         - bearerAuth: []
       responses:
         '200':
-          description: Lista de URLs
+          description: List of URLs
 
     post:
-      summary: Cria uma URL encurtada
+      summary: Creates a shortened URL
       tags: [Url]
       security:
         - optionalBearerAuth: []
@@ -27,7 +27,7 @@ paths:
               $ref: '#/components/schemas/CreateUrlDto'
       responses:
         '201':
-          description: URL criada com sucesso
+          description: URL successfully created
           content:
             application/json:
               schema:
@@ -38,7 +38,7 @@ paths:
 
   /{code}:
     get:
-      summary: Redireciona para a URL original
+      summary: Redirects to the original URL
       tags: [Url]
       parameters:
         - name: code
@@ -48,11 +48,11 @@ paths:
             type: string
       responses:
         '302':
-          description: Redirecionamento
+          description: Redirection
 
   /user:
     post:
-      summary: Cria um usuário
+      summary: Creates a user
       tags: [User]
       security:
         - optionalBearerAuth: []
@@ -64,7 +64,7 @@ paths:
               $ref: '#/components/schemas/CreateUserDto'
       responses:
         '201':
-          description: Usuário criado com sucesso
+          description: User successfully created
           content:
             application/json:
               schema:
@@ -75,7 +75,7 @@ paths:
 
   /user/login:
     post:
-      summary: Loga um usuário
+      summary: Logs in a user
       tags: [User]
       security:
         - optionalBearerAuth: []
@@ -87,11 +87,11 @@ paths:
               $ref: '#/components/schemas/LoginDto'
       responses:
         '200':
-          description: Usuário logado com sucesso
+          description: User successfully logged in
           content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/LoginResponseDto'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponseDto'
 
 
 components:
@@ -125,13 +125,10 @@ components:
       properties:
         name:
           type: string
-          format: uri
         email:
           type: string
-          format: uri
         password:
           type: string
-          format: uri
       required:
         - name
         - email
@@ -142,18 +139,16 @@ components:
       properties:
         email:
           type: string
-          format: uri
         password:
           type: string
-          format: uri
       required:
         - email
         - password
 
-  LoginResponseDto:
-    type: object
-    properties:
-      accessToken:
-        type: string
-    required:
-      - accessToken
+    LoginResponseDto:
+      type: object
+      properties:
+        accessToken:
+          type: string
+      required:
+        - accessToken
