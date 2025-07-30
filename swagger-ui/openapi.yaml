@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: URL Service API
-  version: 0.4.6
+  version: 0.5.2
 
 paths:
   /:
@@ -184,8 +184,6 @@ paths:
     post:
       summary: Creates a user
       tags: [User]
-      security:
-        - optionalBearerAuth: []
       requestBody:
         required: true
         content:
@@ -241,8 +239,6 @@ paths:
     post:
       summary: Logs in a user
       tags: [User]
-      security:
-        - optionalBearerAuth: []
       requestBody:
         required: true
         content:
