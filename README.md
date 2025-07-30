@@ -6,11 +6,6 @@ Para configurar as variáveis de ambiente, basta copiar o arquivo .env.example e
 
 Não é necessário alterar as variáveis nesse arquivo, pois o docker-compose já está preparado para usá-las como estão.
 
-Comando:
-```
-cp .env.example .env
-```
-
 ## Executando o projeto
 
 Certifique-se de ter o Docker Compose instalado. Depois, execute o comando abaixo para iniciar toda a aplicação:
