@@ -33,4 +33,14 @@ http://localhost:9000/docs/
 
 Para rodar os testes automatizados, utilize o comando:
 
+```
 npm run test
+```
+
+## Exemplo de uso
+
+Para facilitar os testes das funcionalidades desta API, foi criado um front-end utilizando a IA da Lovable.
+
+Você pode acessá-lo pelo seguinte link:
+
+https://shorturl.legana.com.br/
