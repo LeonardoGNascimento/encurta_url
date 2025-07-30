@@ -1,22 +1,32 @@
-import { OnModuleInit } from '@nestjs/common';
+import { Injectable, OnModuleInit } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { collectDefaultMetrics, Counter, Registry } from 'prom-client';
 
+@Injectable()
 export class MetricsService implements OnModuleInit {
-  registry: Registry;
+  constructor(private configService: ConfigService) {}
 
-  private httpRequestCounter = new Counter({
-    name: 'http_requests_total',
-    help: 'Total de requisições HTTP',
-    labelNames: ['method', 'route', 'status'],
-  });
+  registry: Registry | null;
+  private httpRequestCounter: Counter | null;
 
   onModuleInit() {
-    this.registry = new Registry();
-    collectDefaultMetrics({ register: this.registry });
-    this.registry.registerMetric(this.httpRequestCounter);
+    if (this.configService.get('METRICS') === 'true') {
+      this.registry = new Registry();
+      collectDefaultMetrics({ register: this.registry });
+
+      this.httpRequestCounter = new Counter({
+        name: 'http_requests_total',
+        help: 'Total de requisições HTTP',
+        labelNames: ['method', 'route', 'status'],
+      });
+
+      this.registry.registerMetric(this.httpRequestCounter);
+    }
   }
 
   addRequestCounter(method: string, route: string, status: string) {
-    this.httpRequestCounter.labels(method, route, status).inc();
+    if (this.httpRequestCounter) {
+      this.httpRequestCounter.labels(method, route, status).inc();
+    }
   }
 }

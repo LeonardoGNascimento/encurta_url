@@ -4,9 +4,12 @@ services:
     build:
       dockerfile: dockerfile
       context: .
-    entrypoint: npm run start:dev url
+    command: npm run start:dev url
     volumes:
       - ./:/app
+      - /app/node_modules  
+    depends_on:
+      - mariadb
     networks:
       - my-bridge-network
 
@@ -14,9 +17,12 @@ services:
     build:
       dockerfile: dockerfile
       context: .
-    entrypoint: npm run start:dev user
+    command: npm run start:dev user
     volumes:
       - ./:/app
+      - /app/node_modules  
+    depends_on:
+      - mariadb
     networks:
       - my-bridge-network
 
