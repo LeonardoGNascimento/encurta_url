@@ -2,7 +2,9 @@
 
 ## Configuração das variáveis de ambiente
 
-Copie o arquivo .env.example e crie um novo arquivo .env na raiz do projeto. O docker-compose usará automaticamente essas variáveis.
+Para configurar as variáveis de ambiente, basta copiar o arquivo .env.example e renomeá-lo para .env na raiz do projeto.
+
+Não é necessário alterar as variáveis nesse arquivo, pois o docker-compose já está preparado para usá-las como estão.
 
 Comando:
 ```
